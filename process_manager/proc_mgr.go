@@ -15,6 +15,8 @@ import (
 type ProcessManager struct {
 	LaunchConfigPath   string
 	ShutdownConfigPath string
+	LaunchProcesses    []PackageExecDetails
+	ShutdownProcesses  []PackageExecDetails
 	wg                 sync.WaitGroup
 }
 
@@ -22,6 +24,8 @@ func CreateProcessManager(launchConfigPath string, shutdownConfigPath string) Pr
 	return ProcessManager{
 		LaunchConfigPath:   launchConfigPath,
 		ShutdownConfigPath: shutdownConfigPath,
+		LaunchProcesses:    readPackageDetails(launchConfigPath),
+		ShutdownProcesses:  readPackageDetails(shutdownConfigPath),
 	}
 }
 
@@ -104,31 +108,26 @@ func (pm *ProcessManager) execProcess(details PackageExecDetails, done <-chan bo
 	}
 }
 
-
 func (pm *ProcessManager) worker(baseProcess PackageExecDetails, done <-chan bool) {
 	pm.execProcess(baseProcess, done)
 }
 
 func (pm *ProcessManager) stopWorkers() {
-	stopProcesses := readPackageDetails(pm.ShutdownConfigPath)
-
-	for _, mainProcess := range stopProcesses {
+	for _, mainProcess := range pm.ShutdownProcesses {
 		pm.worker(mainProcess, nil)
 	}
 }
 
 func (pm *ProcessManager) StartWorkers() {
-	startProcesses := readPackageDetails(pm.LaunchConfigPath)
-
 	var persistentProcesseses int = 0
-	for _, mainProcess := range startProcesses {
+	for _, mainProcess := range pm.LaunchProcesses {
 		if mainProcess.ParentProcess.KeepAlive {
 			persistentProcesseses++
 		}
 	}
 
 	done := make(chan bool, persistentProcesseses)
-	for _, mainProcess := range startProcesses {
+	for _, mainProcess := range pm.LaunchProcesses {
 		go pm.worker(mainProcess, done)
 	}
 
