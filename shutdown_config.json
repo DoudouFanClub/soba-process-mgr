@@ -1,0 +1,34 @@
+[
+  {
+    "parent-process": {
+      "launch-command": "taskkill /IM python.exe /F",
+      "keep-alive": false,
+      "extra-delay": 0
+    },
+    "child-processes": []
+  },
+  {
+    "parent-process": {
+      "launch-command": "docker stop ollama_1",
+      "keep-alive": false,
+      "extra-delay": 0
+    },
+    "child-processes": []
+  },
+  {
+    "parent-process": {
+      "launch-command": "docker stop ollama_2",
+      "keep-alive": false,
+      "extra-delay": 0
+    },
+    "child-processes": []
+  },
+  {
+    "parent-process": {
+      "launch-command": "docker stop ollama_3",
+      "keep-alive": false,
+      "extra-delay": 0
+    },
+    "child-processes": []
+  }
+]
