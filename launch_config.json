@@ -28,50 +28,20 @@
       "launch-command": "docker start ollama_1",
       "keep-alive": false,
       "extra-delay": 0
-    },
-    "child-processes": [
-      {
-        "parent-process": {
-          "launch-command": "docker exec ollama_1 ollama run tinyllama:1.1b-chat-v0.6-q6_K",
-          "keep-alive": false,
-          "extra-delay": 0
-        },
-        "child-processes": []
-      }
-    ]
+    }
   },
   {
     "parent-process": {
       "launch-command": "docker start ollama_2",
       "keep-alive": false,
       "extra-delay": 0
-    },
-    "child-processes": [
-      {
-        "parent-process": {
-          "launch-command": "docker exec ollama_2 ollama run tinyllama:1.1b-chat-v0.6-q6_K",
-          "keep-alive": false,
-          "extra-delay": 0
-        },
-        "child-processes": []
-      }
-    ]
+    }
   },
   {
     "parent-process": {
       "launch-command": "docker start ollama_3",
       "keep-alive": false,
       "extra-delay": 0
-    },
-    "child-processes": [
-      {
-        "parent-process": {
-          "launch-command": "docker exec ollama_3 ollama run tinyllama:1.1b-chat-v0.6-q6_K",
-          "keep-alive": false,
-          "extra-delay": 0
-        },
-        "child-processes": []
-      }
-    ]
+    }
   }
 ]
